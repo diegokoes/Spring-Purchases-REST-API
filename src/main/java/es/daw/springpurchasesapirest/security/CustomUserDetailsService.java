@@ -1,9 +1,8 @@
-package es.daw.productoapirest.security;
+package es.daw.springpurchasesapirest.security;
 
-import es.daw.productoapirest.entity.User;
-import es.daw.productoapirest.repository.UserRepository;
+import es.daw.springpurchasesapirest.entities.User;
+import es.daw.springpurchasesapirest.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

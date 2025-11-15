@@ -1,4 +1,4 @@
-package es.daw.productoapirest.security;
+package es.daw.springpurchasesapirest.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
