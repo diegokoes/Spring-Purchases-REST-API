@@ -2,6 +2,7 @@ package es.daw.springpurchasesapirest.controllers;
 
 import es.daw.springpurchasesapirest.dtos.PurchaseDTO;
 import es.daw.springpurchasesapirest.services.PurchaseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,13 @@ public class PurchaseController {
     @GetMapping
     public ResponseEntity<List<PurchaseDTO>> findAll() {
         return ResponseEntity.of(purchaseService.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity newPurchase(@Valid @RequestBody PurchaseDTO purchase) {
+
+
+        return ResponseEntity.ok().build();
     }
 
 }

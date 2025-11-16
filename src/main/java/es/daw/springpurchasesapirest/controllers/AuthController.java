@@ -34,31 +34,30 @@ public class AuthController {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager  authenticationManager;
+    private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse> register(@Valid @RequestBody RegisterRequest request){
+    public ResponseEntity<ApiResponse> register(@Valid @RequestBody RegisterRequest request) {
 
-        // 1. Comprobar si el usuario ya existe
-        if(userRepository.findByUsername(request.getUsername()).isPresent()){
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT) //409 // porque ya existe el usuario
-                    .body( new  ApiResponse(false, "El username "+request.getUsername()+" ya existe"));
+                    .body(new ApiResponse(false, "El username " + request.getUsername() + " ya existe"));
 
         }
 
         // 2. Determinar el rol solicitado o por defecto
         String roleName = Optional.ofNullable(request.getRole())
                 .map(String::toUpperCase)
-                .map( r -> r.startsWith("ROLE_") ? r : "ROLE_" + r)
+                .map(r -> r.startsWith("ROLE_") ? r : "ROLE_" + r)
                 .orElse("ROLE_USER"); // by default
 
         // PENDIENTE!!! Y SI SE ENVIÁN ROLES DUPLICADOS!!!
 
         // 3. Buscar el rol en la BD
         Role role = roleRepository.findByName(roleName)
-                .orElseThrow(() -> new IllegalArgumentException("El role "+roleName+" no existe"));
+                .orElseThrow(() -> new IllegalArgumentException("El role " + roleName + " no existe"));
 
         // 4. Crear el nuevo usuario
         User newUser = new User();
@@ -84,7 +83,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request){
+    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         /*
             authenticationManager.authenticate(...) es el punto central de validación en Spring Security.
             Internamente llama al UserDetailsService.loadUserByUsername().
