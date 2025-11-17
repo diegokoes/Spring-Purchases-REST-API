@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface PurchaseMapper {
 
-
+    @Mapping(target = "products", ignore = true)
     PurchaseDTO toPurchaseDTO(Purchase purchase);
 
     @Mapping(target = "products", ignore = true)

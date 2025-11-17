@@ -10,6 +10,9 @@ import es.daw.springpurchasesapirest.repositories.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +41,14 @@ public class PurchaseService {
         newPurchase.setProducts(products);
         purchaseRepository.save(newPurchase);
         return Optional.ofNullable(purchase);
+    }
+
+    public Optional<List<PurchaseDTO>> findPurchaseByDate(LocalDate date) {
+        LocalDateTime start = date.atStartOfDay();
+        LocalDateTime end = date.atTime(LocalTime.MAX);
+        return Optional.ofNullable(purchaseMapper.toPurchaseDTOList(purchaseRepository.findByDateBetween(start,
+                end).get()));
+
     }
 
 
